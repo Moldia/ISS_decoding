@@ -21,7 +21,7 @@ setup(
     long_description_content_type="text/markdown",
     long_description=long_description,
     packages=find_packages(),
-    install_requires=['starfish ','scikit-image == 0.15.0', #starfish ==0.2.1
+    install_requires=['starfish ==0.2.1','scikit-image == 0.15.0',
                     'xarray==0.17.0','scanpy','squidpy','tangram-sc',
                     'cellpose==0.6.1','tifffile', 
                     'numpy', 'pandas','setuptools',
