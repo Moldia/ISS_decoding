@@ -120,6 +120,21 @@ def ISS_pipeline(fov, codebook,
 
     return decoded
 
+def QC_score_calc(decoded=decoded):
+    QC_score_list = [] 
+    for i in range(len(decoded)):
+        intensity_array_int = decoded[i] 
+        quality_list = []
+        for j in range(len(intensity_array_int)):
+            quality = (np.array(intensity_array_int[j]).max())/(np.array(intensity_array_int[j]).sum()) 
+            quality_list.append(quality)
+        quality_list =  [x if math.isnan(x) else x for x in quality_list]
+        QC_score= np.array(quality_list).min() 
+        QC_score_list.append(QC_score)
+    df = decoded.to_features_dataframe()
+    df['quality'] = QC_score_list
+    return df
+
 def process_experiment(exp_path, 
                         output, 
                         register = True, 
@@ -129,6 +144,7 @@ def process_experiment(exp_path,
                         decode_mode = 'PRMC' # or MD
                 ):
     
+
     # create output folder if not exists
     if not os.path.exists(output):
         os.makedirs(output)
@@ -151,6 +167,6 @@ def process_experiment(exp_path,
     for i in not_done:
         print('decoding '+i)
         decoded = ISS_pipeline(experiment[i], experiment.codebook, register, masking_radius, threshold, sigma_vals, decode_mode)
-        df = decoded.to_features_dataframe()
+        df = QC_score_calc(decoded)
         df.to_csv(output + i +'.csv')
 
