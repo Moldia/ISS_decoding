@@ -36,6 +36,7 @@ import pprint
 from starfish.types import Features, Axes
 #from starfish.util.plot import imshow_plane
 test = os.getenv("TESTING") is not None
+import math
 
 def ISS_pipeline(fov, codebook,
                 register = True, 
@@ -120,8 +121,10 @@ def ISS_pipeline(fov, codebook,
 
     return decoded
 
-def QC_score_calc(decoded=decoded):
-    QC_score_list = [] 
+def QC_score_calc(decoded):
+    QC_score_list_min = [] 
+    QC_score_list_mean = [] 
+    QC_score_all_bases = []
     for i in range(len(decoded)):
         intensity_array_int = decoded[i] 
         quality_list = []
@@ -129,10 +132,15 @@ def QC_score_calc(decoded=decoded):
             quality = (np.array(intensity_array_int[j]).max())/(np.array(intensity_array_int[j]).sum()) 
             quality_list.append(quality)
         quality_list =  [x if math.isnan(x) else x for x in quality_list]
-        QC_score= np.array(quality_list).min() 
-        QC_score_list.append(QC_score)
+        QC_score_min = np.array(quality_list).min() 
+        QC_score_mean = np.array(quality_list).mean() 
+        QC_score_list_min.append(QC_score_min)
+        QC_score_list_mean.append(QC_score_mean)
+        QC_score_all_bases.append(quality_list)
     df = decoded.to_features_dataframe()
-    df['quality'] = QC_score_list
+    df['quality_minimum'] = QC_score_list_min
+    df['quality_mean'] = QC_score_list_mean
+    df['quality_all_bases'] = QC_score_all_bases
     return df
 
 def process_experiment(exp_path, 
