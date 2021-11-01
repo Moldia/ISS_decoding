@@ -154,7 +154,7 @@ def process_experiment(exp_path,
                         masking_radius = 15, 
                         threshold = 0.002, 
                         sigma_vals = [1, 10, 30], # min, max and number
-                        decode_mode = 'PRMC' # or MD
+                        decode_mode = 'PRMC', # or MD
                         normalization_method = 'MH
                 ):
     
