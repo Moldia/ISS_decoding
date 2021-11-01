@@ -44,6 +44,7 @@ def ISS_pipeline(fov, codebook,
                 threshold = 0.002, 
                 sigma_vals = [1, 10, 30], # min, max and number
                 decode_mode = 'PRMC' # or MD
+                normalization_method = 'CPTZ' # or MH
                 ):
 
     print('getting images')
@@ -71,7 +72,11 @@ def ISS_pipeline(fov, codebook,
         
     # normalize the channel intensities
     print('normalizing channel intensities')
-    sbp = starfish.image.Filter.ClipPercentileToZero(p_min=80, p_max=99.999, level_method=Levels.SCALE_BY_CHUNK)
+    if normalization_method == 'CPTZ':
+      sbp = starfish.image.Filter.ClipPercentileToZero(p_min=80, p_max=99.999, level_method=Levels.SCALE_BY_CHUNK)
+    else: 
+      sbp = starfish.image.Filter.MatchHistograms({Axes.CH, Axes.ROUND})
+    
     scaled = sbp.run(filtered, n_processes = 1, in_place=False)
     
     bd = FindSpots.BlobDetector(
