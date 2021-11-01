@@ -155,6 +155,7 @@ def process_experiment(exp_path,
                         threshold = 0.002, 
                         sigma_vals = [1, 10, 30], # min, max and number
                         decode_mode = 'PRMC' # or MD
+                        normalization_method = 'MH
                 ):
     
 
@@ -179,7 +180,7 @@ def process_experiment(exp_path,
     
     for i in not_done:
         print('decoding '+i)
-        decoded = ISS_pipeline(experiment[i], experiment.codebook, register, masking_radius, threshold, sigma_vals, decode_mode)
+        decoded = ISS_pipeline(experiment[i], experiment.codebook, register, masking_radius, threshold, sigma_vals, decode_mode, normalization_method)
         df = QC_score_calc(decoded)
         df.to_csv(output + i +'.csv')
 
