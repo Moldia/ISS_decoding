@@ -43,7 +43,7 @@ def ISS_pipeline(fov, codebook,
                 masking_radius = 15, 
                 threshold = 0.002, 
                 sigma_vals = [1, 10, 30], # min, max and number
-                decode_mode = 'MD', # or MD
+                decode_mode = 'PRMC', # or MD
                 channel_normalization = 'MH' # if set to anything else, will do ClipPercentileToZero
                 ):
 
@@ -154,8 +154,8 @@ def process_experiment(exp_path,
                         masking_radius = 15, 
                         threshold = 0.002, 
                         sigma_vals = [1, 10, 30], # min, max and number
-                        decode_mode = 'PRMC', # or MD
-                        normalization_method = 'MH'
+                        decode_mode = 'PRMC',
+                        normalization_method = 'MH' # or MD
                 ):
     
 
