@@ -104,7 +104,7 @@ def ISS_pipeline(fov, codebook,
         print('decoding with MetricDistance')
     # decode the pixel traces using the codebook
         decoder = DecodeSpots.MetricDistance(
-            codebook=experiment.codebook,
+            codebook=codebook,
             max_distance=1,
             min_intensity=1,
             metric='euclidean',
