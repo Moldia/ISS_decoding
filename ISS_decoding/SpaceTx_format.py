@@ -142,7 +142,7 @@ def make_spacetx_format_zen(path, codebook_csv,filenames = ['Base_1_stitched',
         },
         aux_name_to_dimensions={
             'nuclei': {
-                Axes.ROUND: 1,
+                Axes.ROUND: len(filenames),
                 Axes.CH: nuclei_channel,
                 Axes.ZPLANE: 1,
             },
