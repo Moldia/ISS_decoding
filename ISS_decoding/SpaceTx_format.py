@@ -104,13 +104,12 @@ def make_spacetx_format_zen(path, codebook_csv,filenames = ['Base_1_stitched',
 
 
     class ISS2DAuxTileFetcher(TileFetcher):
-        def __init__(self, path, filename_prefix):
+        def __init__(self, path):
             self.path = path
-            self.prefix = filename_prefix
 
         def get_tile(self, fov: int, r: int, ch: int, z: int) -> FetchedTile:
-            return ISSTile2D(os.path.join(self.path, self.prefix + "{}.tif".format(fov+1)), fov)
-    
+            #return ISSTile2D(os.path.join(self.path, self.prefix + "{}.tif".format(fov+1)), fov)
+            return ISSTile2D(os.path.join(self.path, "{}-{}/tile{}.tif".format(filenames[r], nuclei_channel ,fov+1)), fov)
 
     
     CHORDER = [channels.index(i) for i in DO_decorators]
@@ -143,14 +142,13 @@ def make_spacetx_format_zen(path, codebook_csv,filenames = ['Base_1_stitched',
         aux_name_to_dimensions={
             'nuclei': {
                 Axes.ROUND: len(filenames),
-                Axes.CH: nuclei_channel,
+                Axes.CH: 1,
                 Axes.ZPLANE: 1,
             },
         },
         primary_tile_fetcher=ISS2DPrimaryTileFetcher(input_dir),
         aux_tile_fetcher={
-            'nuclei': ISS2DAuxTileFetcher(input_dir, filenames[0] + "-"+str(nuclei_channel)+"/tile"),
-         
+            'nuclei': ISS2DAuxTileFetcher(input_dir),
         },
         postprocess_func=add_codebook,
         default_shape=SHAPE
@@ -168,3 +166,4 @@ def make_spacetx_format_zen(path, codebook_csv,filenames = ['Base_1_stitched',
                 with open(os.path.join(output_dir, file), 'w') as fw:
                     for line in fr:
                         fw.write("%s" % line.replace(output_dir.replace('\\', '\\\\') + '\\\\', ''))
+
