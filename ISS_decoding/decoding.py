@@ -40,6 +40,7 @@ import math
 
 def ISS_pipeline(fov, codebook,
                 register = True, 
+                register_dapi = True,
                 masking_radius = 15, 
                 threshold = 0.002, 
                 sigma_vals = [1, 10, 30], # min, max and number
@@ -49,15 +50,24 @@ def ISS_pipeline(fov, codebook,
 
     print('getting images')
     primary_image = fov.get_image(FieldOfView.PRIMARY_IMAGES) # primary images
-    print('creating reference images')
+    nuclei = fov.get_image('nuclei')
     dots = primary_image.reduce({Axes.CH, Axes.ROUND}, func="max") # reference round for image registration
     # register the raw image
     if register == True: 
-        print('registering images')
-        learn_translation = LearnTransform.Translation(reference_stack=dots, axes=Axes.ROUND, upsampling=100)
-        transforms_list = learn_translation.run(primary_image.reduce({Axes.CH, Axes.ZPLANE}, func="max"))
+        if register_dapi == True:
+            nuclei_round1 = nuclei.sel({Axes.ROUND: 0, Axes.CH: 0, Axes.ZPLANE: 0})
+            print('registering images based on nuclei stain')
+            learn_translation = LearnTransform.Translation(reference_stack=nuclei_round1, axes=Axes.ROUND, upsampling=1000)
+            transforms_list = learn_translation.run(nuclei)
+        else:  
+            print('creating reference images')
+            dots = primary_image.reduce({Axes.CH, Axes.ROUND}, func="max") # reference round for image registration
+            print('registering images')
+            learn_translation = LearnTransform.Translation(reference_stack=dots, axes=Axes.ROUND, upsampling=100)
+            transforms_list = learn_translation.run(primary_image.reduce({Axes.CH, Axes.ZPLANE}, func="max"))
+        
         warp = ApplyTransform.Warp()
-        registered = warp.run(primary_image, transforms_list=transforms_list,  in_place=False, verbose=True)
+        registered = warp.run(primary_image, transforms_list=transforms_list, in_place=False, verbose=True)
         # filter registered data
         masking_radius = masking_radius
         filt = Filter.WhiteTophat(masking_radius, is_volume=False)
@@ -150,7 +160,8 @@ def QC_score_calc(decoded):
 
 def process_experiment(exp_path, 
                         output, 
-                        register = True, 
+                        register = False, 
+                        register_dapi = False,
                         masking_radius = 15, 
                         threshold = 0.002, 
                         sigma_vals = [1, 10, 30], # min, max and number
@@ -180,7 +191,7 @@ def process_experiment(exp_path,
     
     for i in not_done:
         print('decoding '+i)
-        decoded = ISS_pipeline(experiment[i], experiment.codebook, register, masking_radius, threshold, sigma_vals, decode_mode, normalization_method)
+        decoded = ISS_pipeline(experiment[i], experiment.codebook, register, register_dapi, masking_radius, threshold, sigma_vals, decode_mode, normalization_method)
         df = QC_score_calc(decoded)
         df.to_csv(output + i +'.csv')
 
