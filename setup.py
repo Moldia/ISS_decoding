@@ -23,7 +23,7 @@ setup(
     packages=find_packages(),
     install_requires=['starfish ','scikit-image == 0.15.0', #starfish ==0.2.1
                     'xarray==0.17.0','tifffile', 
-                    'numpy', 'pandas','setuptools',
+                    'numpy', 'pandas','setuptools','seaborn',
                     'matplotlib'],
     keywords=['python', 'spatial transcriptomics', 'spatial resolved transcriptomics', 'in situ sequencing', 'ISS','decoding'],
     classifiers=[
