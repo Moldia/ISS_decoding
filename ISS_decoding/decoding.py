@@ -195,7 +195,7 @@ def process_experiment(exp_path,
         df = QC_score_calc(decoded)
         df.to_csv(output + i +'.csv')
 
-def concatenate_starfish_output(path, outpath):
+def concatenate_starfish_output(path, outpath,tag=''):
     
     import pandas as pd
     import os
@@ -210,7 +210,8 @@ def concatenate_starfish_output(path, outpath):
             append_data.append(df)
     df_concat = pd.concat(append_data)
     spots_filt = df_concat[df_concat['target'].notna()]
-    df_concat.to_csv(os.path.join(outpath,'decoded.csv'))
+    name=tag+'decoded.csv'
+    df_concat.to_csv(os.path.join(outpath,name))
     return df_concat, spots_filt 
 
 def plot_starfish_output(spots_file, 
