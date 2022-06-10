@@ -62,7 +62,7 @@ def get_tilepos(tilepos_xy_csv):
             tilexy = np.vstack([tilexy, [np.double(line[0]), np.double(line[1])]])
     return tilexy
 
-def make_spacetx_format(path, codebook_csv,filenames = ['Base_1_stitched',
+def make_spacetx_format_zen(path, codebook_csv,filenames = ['Base_1_stitched',
                                     'Base_2_stitched',
                                     'Base_3_stitched',
                                     'Base_4_stitched',
