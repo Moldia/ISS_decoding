@@ -54,16 +54,6 @@ def compare_scores(reads,score1='quality_minimum',score2='quality_mean',kind='kd
         for col in quality_per_base.columns:
             reads['qc_base'+str(col+1)]=list(quality_per_base.loc[:,col])
     sns.jointplot(x=reads.loc[:,score1], y=reads.loc[:,score2], kind=kind, color=color,hue=reads[hue])
-def plot_scores(reads,on='quality_mean',hue='None',log_scale=False,format_base_quality=False):
-    if hue=='assigned':
-        reads['assigned']=list(~reads['target'].isna())
-    if format_base_quality==False:
-        reads['quality_all_bases']=reads['quality_all_bases'].str.replace('[','')
-        reads['quality_all_bases']=reads['quality_all_bases'].str.replace(']','')
-        quality_per_base=pd.DataFrame(list(reads['quality_all_bases'].str.split(','))).astype(float)
-        for col in quality_per_base.columns:
-            reads['qc_base'+str(col+1)]=list(quality_per_base.loc[:,col])
-    sns.histplot(reads,x=on, hue=hue,multiple="stack",palette="light:m_r",edgecolor=".3",linewidth=.5,log_scale=False)
 
 def plot_scores(reads,on='quality_mean',hue='None',log_scale=False,format_base_quality=False,palette='ch:rot=-.25,hue=1,light=.75'):
     if hue=='assigned':
