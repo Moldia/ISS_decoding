@@ -21,10 +21,7 @@ setup(
     long_description_content_type="text/markdown",
     long_description=long_description,
     packages=find_packages(),
-    install_requires=['starfish ','scikit-image == 0.15.0', #starfish ==0.2.1
-                    'xarray==0.17.0','tifffile', 
-                    'numpy', 'pandas','setuptools','seaborn',
-                    'matplotlib'],
+    install_requires=[],
     keywords=['python', 'spatial transcriptomics', 'spatial resolved transcriptomics', 'in situ sequencing', 'ISS','decoding'],
     classifiers=[
         "Development Status :: 1 - Planning",
