@@ -36,6 +36,7 @@ dependencies:
   - zeromq=4.3.3=he6710b0_3
   - zlib=1.2.11=h7f8727e_4
   - pip:
+    - TissUUmaps==3.0.9.5
     - anyio==3.5.0
     - argon2-cffi==21.3.0
     - argon2-cffi-bindings==21.2.0
