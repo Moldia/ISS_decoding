@@ -4,37 +4,20 @@ channels:
   - defaults
   - conda-forge
 dependencies:
-  - _libgcc_mutex=0.1=main
-  - _openmp_mutex=4.5=1_gnu
-  - backcall=0.2.0=py_0
-  - ca-certificates=2020.10.14=0
-  - certifi=2020.6.20=py37_0
-  - decorator=4.4.2=py_0
-  - ipython_genutils=0.2.0=py37_0
-  - jedi=0.18.1=py37h06a4308_1
-  - jupyter_client=6.1.7=py_0
-  - jupyter_core=4.6.3=py37_0
-  - ld_impl_linux-64=2.35.1=h7274673_9
-  - libffi=3.3=he6710b0_2
-  - libgcc-ng=9.3.0=h5101ec6_17
-  - libgomp=9.3.0=h5101ec6_17
-  - libsodium=1.0.18=h7b6447c_0
-  - libstdcxx-ng=9.3.0=hd4cf53a_17
-  - ncurses=6.3=h7f8727e_2
-  - openssl=1.1.1m=h7f8727e_0
-  - pexpect=4.8.0=py37_1
-  - pickleshare=0.7.5=py37_1001
-  - pip=21.2.2=py37h06a4308_0
-  - python=3.7.11=h12debd9_0
-  - readline=8.1.2=h7f8727e_1
-  - setuptools=58.0.4=py37h06a4308_0
-  - sqlite=3.37.2=hc218d9a_0
-  - tk=8.6.11=h1ccaba5_0
-  - wcwidth=0.2.5=py_0
-  - wheel=0.37.1=pyhd3eb1b0_0
-  - xz=5.2.5=h7b6447c_0
-  - zeromq=4.3.3=he6710b0_3
-  - zlib=1.2.11=h7f8727e_4
+  - ca-certificates=2020.10.14
+  - certifi=2020.6.20
+  - ipython_genutils=0.2.0
+  - jupyter_client=6.1.7
+  - jupyter_core=4.6.3
+  - openssl=1.1.1m
+  - pexpect=4.8.0
+  - pip=21.2.2
+  - python=3.7.11
+  - setuptools=58.0.4
+  - wheel=0.37.1
+  - xz=5.2.5
+  - zeromq=4.3.3
+  - zlib=1.2.11
   - pip:
     - seaborn
     - anyio==3.5.0
