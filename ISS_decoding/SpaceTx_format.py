@@ -136,7 +136,7 @@ def make_spacetx_format(path, codebook_csv,filenames = ['Base_1_stitched',
         path=output_dir, fov_count=num_tiles, tile_format=ImageFormat.TIFF,
         primary_image_dimensions={
             Axes.ROUND: len(filenames),
-            Axes.CH: 4,
+            Axes.CH: len(DO_decorators),
             Axes.ZPLANE: 1,
         },
         aux_name_to_dimensions={

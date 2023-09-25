@@ -18,6 +18,3 @@ from ISS_decoding.qc_metrics import (quality_per_gene,
                                      plot_expression,
                                      filter_reads
                                     )
-                                     
-                                     
-                                     
